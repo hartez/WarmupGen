@@ -1,0 +1,28 @@
+﻿@page "/techniques"
+@using WarmupGen.Core
+
+<PageTitle>Techniques</PageTitle>
+
+<h1>Techniques</h1>
+
+<div class="container">
+
+    @foreach (var technique in generator.Techniques)
+    {
+        <div class="row my-1">
+
+            <div class="col-12">
+
+                <p>@technique</p>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@code {
+    private Generator generator = new Generator();
+}
+

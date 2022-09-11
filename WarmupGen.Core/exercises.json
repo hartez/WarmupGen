@@ -1,0 +1,151 @@
+﻿[
+
+  {
+    "Name": "High Plank",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Handcuff Plank",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Plank & Reach",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Plank Shoulder Tap",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Elevator Plank",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Plank Jacks",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Low Plank Hip Dips",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Regular Situps",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+  {
+    "Name": "Frog Situps",
+    "Techniques": [],
+    "Targets": [ "Core" ]
+  },
+
+
+  {
+    "Name": "Squats",
+    "Techniques": [ "Low Straight Punch" ],
+    "Targets": [ "Legs" ]
+  },
+  {
+    "Name": "Jump Squats",
+    "Techniques": [],
+    "Targets": [ "Legs" ]
+  },
+  {
+    "Name": "Prisoner Squats",
+    "Techniques": [ "Low Straight Punch" ],
+    "Targets": [ "Legs" ]
+  },
+  {
+    "Name": "Sumo Squats",
+    "Techniques": [],
+    "Targets": [ "Legs" ]
+  },
+  {
+    "Name": "Forward Lunges",
+    "Techniques": [],
+    "Targets": [ "Legs" ]
+  },
+  {
+    "Name": "Walking Lunges",
+    "Techniques": [],
+    "Targets": [ "Legs" ]
+  },
+  {
+    "Name": "Tuck Jumps",
+    "Techniques": [],
+    "Targets": [ "Legs", "Cardio" ]
+  },
+
+
+
+  {
+    "Name": "Regular Pushups",
+    "Techniques": [ "Straight Punches", "Palm Heel Strikes" ],
+    "Targets": [ "Arms" ]
+  },
+  {
+    "Name": "Isometric Pushups",
+    "Techniques": [ "Straight Punches", "Palm Heel Strikes" ],
+    "Targets": [ "Arms" ]
+  },
+  {
+    "Name": "Diamond Pushups",
+    "Techniques": [ "Straight Punches", "Palm Heel Strikes" ],
+    "Targets": [ "Arms" ]
+  },
+  {
+    "Name": "Arms-free Pushups",
+    "Techniques": [ "Straight Punches", "Palm Heel Strikes" ],
+    "Targets": [ "Arms" ]
+  },
+  {
+    "Name": "Spider-man Pushups",
+    "Techniques": [ "Straight Punches", "Palm Heel Strikes", "Knee Strikes" ],
+    "Targets": [ "Arms", "Core" ]
+  },
+
+
+  {
+    "Name": "Jumping Jacks",
+    "Techniques": [],
+    "Targets": [ "Cardio", "Footwork" ]
+  },
+  {
+    "Name": "Butt Kickers",
+    "Techniques": [],
+    "Targets": [ "Cardio" ]
+  },
+  {
+    "Name": "High Knees",
+    "Techniques": [],
+    "Targets": [ "Cardio" ]
+  },
+  {
+    "Name": "Football Sprints",
+    "Techniques": [],
+    "Targets": [ "Cardio" ]
+  },
+  {
+    "Name": "Switch Feet",
+    "Techniques": [],
+    "Targets": [ "Cardio", "Footwork" ]
+  },
+  {
+    "Name": "Ninja Jumps",
+    "Techniques": [],
+    "Targets": [ "Legs", "Core" ]
+  },
+  {
+    "Name": "Mountain Climbers",
+    "Techniques": [],
+    "Targets": [ "Cardio" ]
+  }
+
+]

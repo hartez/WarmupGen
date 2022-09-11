@@ -1,0 +1,27 @@
+﻿@page "/exercises"
+@using WarmupGen.Core
+
+<PageTitle>Exercises</PageTitle>
+
+<h1>Exercises</h1>
+
+<div class="container">
+    
+    @foreach (var exercise in generator.Exercises)
+    {
+        <div class="row my-1">
+
+            <div class="col-12">
+
+                <p>@exercise.Name</p>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@code {
+    private Generator generator = new Generator();
+}

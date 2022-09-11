@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties exercises_1json__JsonSchema="[" /></VisualStudio></ProjectExtensions>
+
+  <ItemGroup>
+    <None Remove="exercises.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="exercises.json" />
+  </ItemGroup>
+
+</Project>
