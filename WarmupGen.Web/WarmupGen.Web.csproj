@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.6.0" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.21.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WarmupGen.Core\WarmupGen.Core.csproj" />
   </ItemGroup>
 
