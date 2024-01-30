@@ -7,47 +7,32 @@ namespace WarmupGen.Tests
         [Fact]
         public void CanReadJsonData()
         {
-            var generator = new Generator();
-            var count = generator.Exercises.Count;
+            var count = Generator.Exercises.Count;
             Assert.True(count > 0);
         }
 
         [Fact]
         public void ExercisesContainsRegularPushups()
         {
-            var generator = new Generator();
-            var pushups = generator.Exercises.Where(e => e.Name == "Regular Pushups").First();
+            var pushups = Generator.Exercises.Where(e => e.Name == "Regular Pushups").First();
         }
 
         [Fact]
-        public void CategoriesContainsPushups()
+        public void TargetsContainsArms()
         {
-            var generator = new Generator();
-            var pushups = generator.Targets.Where(c => c == "Pushups").First();
+            var pushups = Generator.Targets.Where(c => c == "Arms").First();
         }
 
         [Fact]
         public void TechniquewsContainsStraightPunches()
         {
-            var generator = new Generator();
-            var pushups = generator.Techniques.Where(t => t == "Straight Punches").First();
-        }
-
-        [Fact]
-        public void WarmupCountMatchesTemplateCount()
-        {
-            var generator = new Generator();
-            var template = new WarmupTemplate(3);
-            var warmup = generator.GenerateWarmup(template);
-
-            Assert.Equal(template.Count, warmup.Exercises.Count);
+            var pushups = Generator.Techniques.Where(t => t == "Straight Punches").First();
         }
 
         [Fact(Skip = "Just here to create example json files")]
         public void Write()
         {
-            var generator = new Generator();
-            generator.WriteJson();
+			Generator.WriteJson();
         }
     }
 }

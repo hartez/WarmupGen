@@ -3,118 +3,70 @@
 
 <PageTitle>Generate Warmup</PageTitle>
 
-<h1>Create Warmup</h1>
+<h1>Warmup</h1>
 
-<p>
-    <label>
-        Select number of segments:
-        <select @bind="CurrentCount" class="form-select">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-        </select>
-    </label>
-</p>
+<EditForm Model="@CurrentWarmup">
 
+	<button class="btn btn-primary mb-4" @onclick="() => CurrentWarmup.AddSegment()"><span class="oi oi-plus" aria-hidden="true"></span></button>
 
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Exercise</th>
+				<th scope="col">Targets</th>
+				<th scope="col">Techniques</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
 
+			@foreach (var segment in CurrentWarmup.Segments)
+			{
+				<tr>
 
-<EditForm Model="@template">
+					<td>@segment.Exercise.Name</td>
+					<td>
+						<InputSelect @bind-Value="segment.Target" class="form-select">
+							<option value="">Any</option>
+							@foreach (var target in Generator.Targets)
+							{
+								<option value="@target">@target</option>
+							}
+						</InputSelect>
+					</td>
+					<td>
+						<InputSelect @bind-Value="segment.Technique" class="form-select">
+							<option value="">Any</option>
+							@foreach (var technique in Generator.Techniques)
+							{
+								<option value="@technique">@technique</option>
+							}
+						</InputSelect>
+					</td>
 
-    @for (int n = 0; n < template.SegmentTemplates.Count; n++)
-    {
-        var criterion = template.SegmentTemplates[n];
-        var alternate = n % 2 == 0 ? "alternate-row" : "";
+					<td>
+						<button class="btn btn-primary mb-4" @onclick="() => CurrentWarmup.Remove(segment)"><span class="oi oi-trash" aria-hidden="true"></span></button>
+					</td>
 
-        <div class="container p-1 my-1">
-            <h5>Part @(n + 1) - @criterion</h5>
-            <div class="row my-1">
-                <div class="col-4">
-                    <div class="form-floating mb-3">
-                        <InputSelect @bind-Value="criterion.Target" class="form-select">
-                            <option value="">Any</option>
-                            @foreach (var category in generator.Targets)
-                            {
-                                <option value="@category">@category</option>
-                            }
-                        </InputSelect>
-                        <label for="floatingInput">Target</label>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-floating mb-3">
-                        <InputSelect @bind-Value="criterion.Technique" class="form-select">
-                            <option value="">Any</option>
-                            @foreach (var technique in generator.Techniques)
-                            {
-                                <option value="@technique">@technique</option>
-                            }
-                        </InputSelect>
-                        <label for="floatingInput">Technique</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
+				</tr>
+			}
+		</tbody>
+	</table>
 </EditForm>
 
-<button class="btn btn-primary mb-4" @onclick="Generate">Generate</button>
-
-@if (warmup != null)
-{
-    <h5>Your Warmup</h5>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Exercise</th>
-                <th scope="col">Targets</th>
-                <th scope="col">Techniques</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var exercise in warmup.Exercises)
-            {
-                <tr>
-                    <td>@exercise.Name</td>
-                    <td>@String.Join(", ", exercise.Targets)</td>
-                    <td>@String.Join(", ", exercise.Techniques)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
 @code {
-    private Generator generator = new Generator();
-    const int defaultSegmentCount = 5;
-    private WarmupTemplate template = new WarmupTemplate(defaultSegmentCount);
+	const int defaultSegmentCount = 5;
+	private Warmup? _warmup;
 
-    private Warmup? warmup;
-
-    void Generate()
-    {
-        warmup = generator.GenerateWarmup(template);
-    }
-
-    int CurrentCount
-    {
-        get => template.Count;
-        set
-        {
-            if (value != template.Count)
-            {
-                // Eventually, probably want to pass in the current template so it can
-                // reuse the overlap
-                template = new WarmupTemplate(value);
-            }
-        }
-    }
+	Warmup CurrentWarmup
+	{
+		get
+		{
+			if (_warmup is null)
+			{
+				_warmup = Generator.GenerateWarmup(defaultSegmentCount);
+			}
+			return _warmup;
+		}
+	}
 }

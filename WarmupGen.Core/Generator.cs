@@ -5,8 +5,6 @@ namespace WarmupGen.Core
 {
     public class Generator
     {
-        public static Exercise None = new("No Match Found", new(), new());
-
         public Generator() 
         { 
         }
@@ -16,9 +14,16 @@ namespace WarmupGen.Core
             _exercises = new List<Exercise>(exercises);
         }
 
-        public Warmup GenerateWarmup(WarmupTemplate template)
+        public static Warmup GenerateWarmup(int segmentCount)
         {
-            return new Warmup(template.FindMatches(Exercises));
+			var warmup = new Warmup();
+
+            for( int n = 0; n < segmentCount; n++ )
+			{ 
+				warmup.Add(new Segment(null, null)); 
+			}
+
+            return warmup;
         }
 
         static List<Exercise> ReadJson()
@@ -46,29 +51,49 @@ namespace WarmupGen.Core
             }
         }
 
-        public void WriteJson()
+        public static void WriteJson()
         {
             File.WriteAllText("exercises.json", JsonSerializer.Serialize(Exercises));
         }
 
-        List<Exercise>? _exercises;
-        List<string>? _targets;
-        List<string>? _techniques;
+        static List<Exercise>? _exercises;
+        static List<string>? _targets;
+        static List<string>? _techniques;
 
-        public List<Exercise> Exercises => _exercises ??= ReadJson();
+        public static List<Exercise> Exercises => _exercises ??= ReadJson();
 
-        public List<string> Targets => _targets ??= GetTargets();
+        public static List<string> Targets => _targets ??= GetTargets();
 
-        List<string> GetTargets()
+		static List<string> GetTargets()
         {
             return Exercises.SelectMany(e => e.Targets, (e, c) => c).OrderBy(c => c).Distinct().ToList();
         }
 
-        public List<string> Techniques => _techniques ??= GetTechniques();
+        public static List<string> Techniques => _techniques ??= GetTechniques();
 
-        List<string> GetTechniques()
+		static List<string> GetTechniques()
         {
             return Exercises.SelectMany(e => e.Techniques, (e, c) => c).OrderBy(c => c).Distinct().ToList();
         }
+
+        public static Exercise ChooseRandomMatchingExercise(string? technique, string? target, IEnumerable<Exercise>? exclude)
+		{
+			// TODO keep a static empty list arround for this
+			var candidates = Exercises
+				.Except(exclude ?? new List<Exercise>())
+				.Where(e => e.Matches(technique, target))
+				.ToList();
+
+			var count = candidates.Count;
+			if (count == 0)
+			{
+				return Exercise.None;
+			}
+
+			var random = new Random(DateTime.Now.Millisecond);
+			var index = random.Next(count - 1);
+
+			return candidates[index];
+		}
     }
 }
