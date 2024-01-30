@@ -25,6 +25,11 @@
 			segment.CriteriaChanged -= SegmentCriteriaChanged;
 		}
 
+		public void Reroll(Segment segment)
+		{
+			segment.Exercise = ChooseRandomMatchingExerciseFor(segment);
+		}
+
 		private void SegmentCriteriaChanged(object? sender, EventArgs e)
 		{
 			if (sender is not Segment segment)
@@ -37,7 +42,7 @@
 				return;
 			}
 
-			segment.Exercise = ChooseRandomMatchingExerciseFor(segment);
+			Reroll(segment);
 		}
 
 		public Exercise ChooseRandomMatchingExerciseFor(Segment segment)
