@@ -14,8 +14,8 @@
 			<tr>
 				<th scope="col">Exercise</th>
 				<th></th>
-				<th scope="col">Targets</th>
-				<th scope="col">Techniques</th>
+				<th scope="col">Target/Technique</th>
+				<th></th>
 				<th></th>
 			</tr>
 		</thead>
@@ -32,22 +32,23 @@
 					</td>
 
 					<td>
-						<InputSelect @bind-Value="segment.Target" class="form-select">
-							<option value="">Any</option>
-							@foreach (var target in Generator.Targets)
-							{
-								<option value="@target">@target</option>
-							}
-						</InputSelect>
+						<table class="table table-borderless text-nowrap">
+							<tr>
+								<td>
+									<span>Target: @Display(segment.Target)</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span>Technique: @Display(segment.Technique)</span>
+								</td>
+							</tr>
+						</table>
+
 					</td>
+
 					<td>
-						<InputSelect @bind-Value="segment.Technique" class="form-select">
-							<option value="">Any</option>
-							@foreach (var technique in Generator.Techniques)
-							{
-								<option value="@technique">@technique</option>
-							}
-						</InputSelect>
+						<button class="btn btn-primary mb-4" @onclick="() => EditCriteria(segment)"><span class="oi oi-pencil" aria-hidden="true"></span></button>
 					</td>
 
 					<td>
@@ -74,5 +75,20 @@
 			}
 			return _warmup;
 		}
+	}
+
+	[CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+	async Task EditCriteria(Segment segment)
+	{
+		var parameters = new ModalParameters().Add(nameof(Segment), segment);
+		var form = Modal.Show<Criteria>(parameters);
+		await form.Result;
+		StateHasChanged();
+	}
+
+	string Display(string? s)
+	{
+		return s ?? "Any";
 	}
 }

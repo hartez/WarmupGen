@@ -1,0 +1,29 @@
+﻿@using WarmupGen.Core
+<h3>Criteria</h3>
+
+
+<InputSelect @bind-Value="Segment.Target" class="form-select">
+	<option value="">Any</option>
+	@foreach (var target in Generator.Targets)
+	{
+		<option value="@target">@target</option>
+	}
+</InputSelect>
+
+<InputSelect @bind-Value="Segment.Technique" class="form-select">
+	<option value="">Any</option>
+	@foreach (var technique in Generator.Techniques)
+	{
+		<option value="@technique">@technique</option>
+	}
+</InputSelect>
+
+
+<button @onclick="Close">Close</button>
+
+@code {
+	[CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+	[Parameter] public Segment Segment { get; set; } = default!;
+
+	private async Task Close() => await BlazoredModal.CloseAsync();
+}
