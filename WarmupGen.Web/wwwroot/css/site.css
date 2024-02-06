@@ -66,3 +66,9 @@ a, .btn-link {
 .alternate-row {
     background: #adb5bd;
 }
+
+/* Make sure stripes include collapsed rows */
+.tableWarmup tbody tr:nth-child(4n+1), .tableWarmup tbody tr:nth-child(4n+2) {
+    background: #adb5bd;
+}
+
