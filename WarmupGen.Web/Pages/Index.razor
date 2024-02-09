@@ -1,52 +1,56 @@
 ﻿@page "/"
 @using WarmupGen.Core
 
-<PageTitle>Generate Warmup</PageTitle>
-
-<h1>Warmup</h1>
+<PageTitle>Create Warmup</PageTitle>
 
 <EditForm Model="@CurrentWarmup">
 
-	<button class="btn btn-primary mb-4" @onclick="() => CurrentWarmup.AddSegment()"><span class="oi oi-plus" aria-hidden="true"></span></button>
-
-	<table class="table tableWarmup">
+	<table class="table warmup">
 		<thead>
 			<tr>
-				<th scope="col">Exercise</th>
-				<th scope="col"></th>
-				<th scope="col"></th>
-				<th scope="col"></th>
+				<th scope="col" colspan="3"><h1>Warmup</h1></th>
+				<th scope="col">
+					<button class="btn btn-primary btn-sm" @onclick="() => CurrentWarmup.AddSegment()">
+						<span class="oi oi-plus" aria-hidden="true"></span>
+					</button>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
-
-			@code {
-		int n = 0;
-			}
 
 			@foreach (var segment in CurrentWarmup.Segments)
 			{
 				string collapseId = $"collapse{n++}";
 
-				<tr>
+				<tr class="@GetSegmentClass(segment)" @oncustomtransitionend="args => RemoveSegment(args, segment)">
 
 					<td>@segment.Exercise.Name</td>
 
 					<td>
-						<button class="btn btn-primary btn-sm" @onclick="() => CurrentWarmup.Reroll(segment)"><span class="oi oi-reload" aria-hidden="true"></span></button>
+						<button class="btn btn-primary btn-sm" @onclick="() => CurrentWarmup.Reroll(segment)">
+							<span class="oi oi-reload" aria-hidden="true"></span>
+						</button>
 					</td>
 
 					<td>
-						<button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId"><span class="oi oi-caret-bottom" aria-hidden="true"></span></button>
+						<button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+							<span class="oi oi-caret-bottom pull-right" aria-hidden="true"></span>
+							<span class="oi oi-caret-top pull-right" aria-hidden="true"></span>
+						</button>
 					</td>
 
 					<td>
-						<button class="btn btn-primary btn-sm" @onclick="() => CurrentWarmup.Remove(segment)"><span class="oi oi-trash" aria-hidden="true"></span></button>
+						<button class="btn btn-primary btn-sm" @onclick="() => MarkSegmentForRemoval(segment)"><span class="oi oi-trash" aria-hidden="true"></span></button>
 					</td>
 
 				</tr>
 
 				<tr class="collapse" id="@collapseId">
+
+					@{
+						// TODO Figure out how have a button at the top that opens/closes all of them
+					}
+
 					<td colspan="4">
 						<table class="table table-borderless">
 							<tr>
@@ -54,6 +58,10 @@
 									Target:
 								</td>
 								<td>
+									@{
+										// TODO Figure out why the bottom edge of the dropdown is cut off
+									}
+
 									<InputSelect @bind-Value="segment.Target" class="form-select">
 										<option value="">Any</option>
 										@foreach (var target in Generator.Targets)
@@ -85,9 +93,14 @@
 	</table>
 </EditForm>
 
+
+
 @code {
 	const int defaultSegmentCount = 5;
 	private Warmup? _warmup;
+	int n = 0;
+
+	List<Segment> _toRemove = new List<Segment>();
 
 	Warmup CurrentWarmup
 	{
@@ -99,5 +112,34 @@
 			}
 			return _warmup;
 		}
+	}
+
+	protected override void OnInitialized()
+	{
+		n = 0;
+	}
+
+	void MarkSegmentForRemoval(Segment segment)
+	{
+		_toRemove.Add(segment);
+		StateHasChanged();
+	}
+
+	void RemoveSegment(CustomTransitionEndEventArgs args, Segment segment)
+	{
+		if (args?.PropertyName == "opacity" && _toRemove.Remove(segment))
+		{
+			CurrentWarmup.Remove(segment);
+		}
+	}
+
+	string GetSegmentClass(Segment segment)
+	{
+		if (_toRemove.Contains(segment))
+		{
+			return "removing";
+		}
+
+		return "normal";
 	}
 }

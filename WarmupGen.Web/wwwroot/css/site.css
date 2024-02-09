@@ -63,12 +63,35 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-.alternate-row {
-    background: #adb5bd;
+table.warmup {
+    border-color: #fff;
 }
 
 /* Make sure stripes include collapsed rows */
-.tableWarmup tbody tr:nth-child(4n+1), .tableWarmup tbody tr:nth-child(4n+2) {
+table.warmup > tbody > tr:nth-child(4n+1), table.warmup > tbody > tr:nth-child(4n+2) {
     background: #adb5bd;
+    border-color: #adb5bd;
 }
 
+table.warmup > tbody > tr {
+    border-bottom-width: 0;
+}
+
+table.table-borderless .form-select {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+button[aria-expanded=true] .oi-caret-bottom {
+    display: none;
+}
+
+button[aria-expanded=false] .oi-caret-top {
+    display: none;
+}
+
+
+.removing {
+    transition: opacity 0.7s linear;
+    opacity: 0;
+}
