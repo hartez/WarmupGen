@@ -59,10 +59,13 @@ namespace WarmupGen.Core
         static List<Exercise>? _exercises;
         static List<string>? _targets;
         static List<string>? _techniques;
+		static List<TechniqueMap>? _techniqueMaps;
 
         public static List<Exercise> Exercises => _exercises ??= ReadJson();
 
         public static List<string> Targets => _targets ??= GetTargets();
+
+		public static List<TechniqueMap> TechniqueMaps => _techniqueMaps ??= GetTechniqueMaps();
 
 		static List<string> GetTargets()
         {
@@ -75,6 +78,18 @@ namespace WarmupGen.Core
         {
             return Exercises.SelectMany(e => e.Techniques, (e, c) => c).OrderBy(c => c).Distinct().ToList();
         }
+
+		static List<TechniqueMap> GetTechniqueMaps()
+		{
+			var maps = from technique in Techniques
+					select new TechniqueMap(technique, (
+						from exercise in Exercises
+						where exercise.Techniques.Contains(technique)
+						select exercise.Name 
+					).ToList());
+
+			return maps.ToList();
+		}
 
         public static Exercise ChooseRandomMatchingExercise(string? technique, string? target, IEnumerable<Exercise>? exclude)
 		{
@@ -96,4 +111,9 @@ namespace WarmupGen.Core
 			return candidates[index];
 		}
     }
+
+	public record TechniqueMap(string Name, List<string> ExerciseNames)
+	{
+		public string ExerciseNamesDisplay => string.Join(", ", ExerciseNames);
+	}
 }

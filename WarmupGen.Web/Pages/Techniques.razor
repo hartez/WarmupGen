@@ -7,18 +7,23 @@
 
 <div class="container">
 
-    @foreach (var technique in Generator.Techniques)
-    {
-        <div class="row my-1">
-
-            <div class="col-12">
-
-                <p>@technique</p>
-
-            </div>
-
-        </div>
-    }
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Technique</th>
+				<th scope="col">Exercises</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var technique in Generator.TechniqueMaps.OrderBy(e => e.Name))
+			{
+				<tr>
+					<td>@technique.Name</td>
+					<td>@technique.ExerciseNamesDisplay</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 
 </div>
 

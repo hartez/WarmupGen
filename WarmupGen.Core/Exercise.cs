@@ -2,7 +2,7 @@
 {
 	public record Exercise(string Name, List<string> Techniques, List<string> Targets)
     {
-		public static Exercise None = new("No Match Found", new(), new());
+		public static Exercise None = new("No Match Found", [], []);
 
         public bool Matches(string? technique, string? target)
         {
@@ -24,5 +24,9 @@
 
 			return true;
         }
+
+		public string TechniquesDisplay => string.Join(", ", Techniques.Order());
+
+		public string TargetsDisplay => string.Join(", ", Targets.Order());
     }
 }
