@@ -1,14 +1,35 @@
 ﻿@page "/"
 @using WarmupGen.Core
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Create Warmup</PageTitle>
+
+<script language="javascript">
+	window.clipboardCopy = {
+		copyText: function (text) {
+			navigator.clipboard.writeText(text).then(function () {
+				alert("Copied to clipboard!");
+			})
+				.catch(function (error) {
+					alert(error);
+				});
+		}
+	}
+</script>
 
 <EditForm Model="@CurrentWarmup">
 
 	<table class="table warmup">
 		<thead>
 			<tr>
-				<th scope="col" colspan="3"><h1>Warmup</h1></th>
+				<th scope="col" colspan="2"><h1>Warmup</h1></th>
+				
+				<th>
+					<button class="btn btn-primary btn-sm" @onclick="CopyWarmupToClipboard">
+						<span class="oi oi-clipboard" aria-hidden="true"></span>
+					</button>
+				</th>
+
 				<th scope="col">
 					<button class="btn btn-primary btn-sm" @onclick="() => CurrentWarmup.AddSegment()">
 						<span class="oi oi-plus" aria-hidden="true"></span>
@@ -141,5 +162,10 @@
 		}
 
 		return "normal";
+	}
+
+	private async Task CopyWarmupToClipboard()
+	{
+		await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", CurrentWarmup.AsList());
 	}
 }

@@ -13,9 +13,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazoredModal();
 
-builder.Services.AddRazorComponents(options => 
-    options.DetailedErrors = true);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

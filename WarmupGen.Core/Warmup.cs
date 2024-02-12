@@ -51,5 +51,10 @@
 
 			return Generator.ChooseRandomMatchingExercise(segment.Technique, segment.Target, currentExercises);
 		}
+
+		public string AsList()
+		{
+			return string.Join("\n", Segments.Select(s => s.Exercise.Name));
+		}
 	}
 }
