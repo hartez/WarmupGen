@@ -7,23 +7,17 @@
 
 <div class="container">
 
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th scope="col">Technique</th>
-				<th scope="col">Exercises</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var technique in Generator.TechniqueMaps.OrderBy(e => e.Name))
+	@foreach (var technique in Generator.TargetMaps.OrderBy(e => e.Name))
+	{
+		<h2>@technique.Name</h2>
+
+		<ul class="list-unstyled">
+			@foreach (var exercise in technique.ExerciseNames.OrderBy(name => name))
 			{
-				<tr>
-					<td>@technique.Name</td>
-					<td>@technique.ExerciseNamesDisplay</td>
-				</tr>
+				<li>@exercise</li>
 			}
-		</tbody>
-	</table>
+		</ul>
+	}
 
 </div>
 

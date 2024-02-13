@@ -1,0 +1,22 @@
+﻿@page "/targets"
+@using WarmupGen.Core
+
+<PageTitle>Targets</PageTitle>
+
+<h1>Targets</h1>
+
+<div class="container">
+
+	@foreach (var target in Generator.TargetMaps.OrderBy(e => e.Name))
+	{
+		<h2>@target.Name</h2>
+
+		<ul class="list-unstyled">
+			@foreach (var exercise in target.ExerciseNames.OrderBy(name => name))
+			{
+				<li>@exercise</li>
+			}
+		</ul>
+	}
+
+</div>

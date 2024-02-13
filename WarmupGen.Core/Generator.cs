@@ -29,27 +29,15 @@ namespace WarmupGen.Core
         static List<Exercise> ReadJson()
         {
             var thisAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = thisAssembly.GetManifestResourceStream("WarmupGen.Core.exercises.json"))
-            {
-                if (stream == null)
-                {
-                    throw new Exception("Could not find exercises.json");
-                }
-
-                using (var reader = new StreamReader(stream))
-                {
-                    var data = reader.ReadToEnd();
-                    var exercises = JsonSerializer.Deserialize<List<Exercise>>(data);
-
-                    if (exercises == null)
-                    {
-                        throw new Exception("JSON was invalid");
-                    }
-
-                    return exercises;
-                }
-            }
-        }
+			
+			using var stream = thisAssembly.GetManifestResourceStream("WarmupGen.Core.exercises.json") ?? throw new Exception("Could not find exercises.json");
+			using var reader = new StreamReader(stream);
+			
+			var data = reader.ReadToEnd();
+			var exercises = JsonSerializer.Deserialize<List<Exercise>>(data) ?? throw new Exception("JSON was invalid");
+			
+			return exercises;
+		}
 
         public static void WriteJson()
         {
@@ -59,13 +47,16 @@ namespace WarmupGen.Core
         static List<Exercise>? _exercises;
         static List<string>? _targets;
         static List<string>? _techniques;
-		static List<TechniqueMap>? _techniqueMaps;
-
+		static List<ExerciseMap>? _techniqueMaps;
+		static List<ExerciseMap>? _targetMaps;
+		
         public static List<Exercise> Exercises => _exercises ??= ReadJson();
 
         public static List<string> Targets => _targets ??= GetTargets();
 
-		public static List<TechniqueMap> TechniqueMaps => _techniqueMaps ??= GetTechniqueMaps();
+		public static List<ExerciseMap> TechniqueMaps => _techniqueMaps ??= GetTechniqueMaps();
+
+		public static List<ExerciseMap> TargetMaps => _targetMaps ??= GetTargetMaps();
 
 		static List<string> GetTargets()
         {
@@ -79,12 +70,24 @@ namespace WarmupGen.Core
             return Exercises.SelectMany(e => e.Techniques, (e, c) => c).OrderBy(c => c).Distinct().ToList();
         }
 
-		static List<TechniqueMap> GetTechniqueMaps()
+		static List<ExerciseMap> GetTechniqueMaps()
 		{
 			var maps = from technique in Techniques
-					select new TechniqueMap(technique, (
+					select new ExerciseMap(technique, (
 						from exercise in Exercises
 						where exercise.Techniques.Contains(technique)
+						select exercise.Name 
+					).ToList());
+
+			return maps.ToList();
+		}
+
+		static List<ExerciseMap> GetTargetMaps()
+		{
+			var maps = from target in Targets
+					select new ExerciseMap(target, (
+						from exercise in Exercises
+						where exercise.Targets.Contains(target)
 						select exercise.Name 
 					).ToList());
 
@@ -112,8 +115,5 @@ namespace WarmupGen.Core
 		}
     }
 
-	public record TechniqueMap(string Name, List<string> ExerciseNames)
-	{
-		public string ExerciseNamesDisplay => string.Join(", ", ExerciseNames);
-	}
+	public record ExerciseMap(string Name, List<string> ExerciseNames);
 }
