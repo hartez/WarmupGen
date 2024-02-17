@@ -49,7 +49,7 @@
 		{
 			var currentExercises = Segments.Where(s => s != segment).Select(s => s.Exercise);
 
-			return Generator.ChooseRandomMatchingExercise(segment.Technique, segment.Target, currentExercises);
+			return Generator.ExerciseLibrary.ChooseRandomMatchingExercise(segment.Technique, segment.Target, currentExercises);
 		}
 
 		public string AsList()

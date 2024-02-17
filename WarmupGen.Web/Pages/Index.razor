@@ -85,9 +85,9 @@
 
 									<InputSelect @bind-Value="segment.Target" class="form-select">
 										<option value="">Any</option>
-										@foreach (var target in Generator.Targets)
+										@foreach (var target in Generator.ExerciseLibrary.Targets)
 										{
-											<option value="@target">@target</option>
+											<option value="@target.Name">@target.Name</option>
 										}
 									</InputSelect>
 								</td>
@@ -99,9 +99,9 @@
 								<td>
 									<InputSelect @bind-Value="segment.Technique" class="form-select">
 										<option value="">Any</option>
-										@foreach (var technique in Generator.Techniques)
+										@foreach (var technique in Generator.ExerciseLibrary.Techniques)
 										{
-											<option value="@technique">@technique</option>
+											<option value="@technique.Name">@technique.Name</option>
 										}
 									</InputSelect>
 								</td>

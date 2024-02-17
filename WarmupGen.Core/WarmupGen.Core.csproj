@@ -18,10 +18,14 @@
 
   <ItemGroup>
     <None Remove="exercises.json" />
+    <None Remove="targets.json" />
+    <None Remove="techniques.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="exercises.json" />
+    <EmbeddedResource Include="targets.json" />
+    <EmbeddedResource Include="techniques.json" />
   </ItemGroup>
 
 </Project>

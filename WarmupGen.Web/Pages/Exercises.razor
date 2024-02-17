@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var exercise in Generator.Exercises.OrderBy(e => e.Name))
+			@foreach (var exercise in Generator.ExerciseLibrary.Exercises.OrderBy(e => e.Name))
 			{
 				<tr>
 					<td>@exercise.Name</td>

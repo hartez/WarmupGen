@@ -3,117 +3,90 @@ using System.Text.Json;
 
 namespace WarmupGen.Core
 {
-    public class Generator
-    {
-        public Generator() 
-        { 
-        }
+	public class Generator
+	{
+		public static ExerciseLibrary ExerciseLibrary => _exerciseLibrary ??= LoadLibrary();
 
-        public Generator(IEnumerable<Exercise> exercises) 
-        {
-            _exercises = new List<Exercise>(exercises);
-        }
+		static ExerciseLibrary? _exerciseLibrary;
 
-        public static Warmup GenerateWarmup(int segmentCount)
-        {
+		public Generator()
+		{
+		}
+
+		public static Warmup GenerateWarmup(int segmentCount)
+		{
 			var warmup = new Warmup();
 
-            for( int n = 0; n < segmentCount; n++ )
-			{ 
-				warmup.Add(new Segment(null, null)); 
+			for (int n = 0; n < segmentCount; n++)
+			{
+				warmup.Add(new Segment(null, null));
 			}
 
-            return warmup;
-        }
+			return warmup;
+		}
 
-        static List<Exercise> ReadJson()
-        {
-            var thisAssembly = Assembly.GetExecutingAssembly();
-			
-			using var stream = thisAssembly.GetManifestResourceStream("WarmupGen.Core.exercises.json") ?? throw new Exception("Could not find exercises.json");
-			using var reader = new StreamReader(stream);
-			
-			var data = reader.ReadToEnd();
-			var exercises = JsonSerializer.Deserialize<List<Exercise>>(data) ?? throw new Exception("JSON was invalid");
-			
+		static ExerciseLibrary LoadLibrary()
+		{
+			var targets = LoadTargets();
+			var techniques = LoadTechniques();
+			var exercises = LoadExercises(targets, techniques);
+
+			return new ExerciseLibrary(targets, techniques, exercises);
+		}
+
+		static List<Exercise> LoadExercises(List<Target> targets, List<Technique> techniques)
+		{
+			JsonSerializerOptions exerciseOptions = new();
+			exerciseOptions.Converters.Add(new TechniqueConverter(techniques));
+			exerciseOptions.Converters.Add(new TargetConverter(targets));
+
+			var exercises = Load<Exercise>("exercises", exerciseOptions);
+
 			return exercises;
 		}
 
-        public static void WriteJson()
-        {
-            File.WriteAllText("exercises.json", JsonSerializer.Serialize(Exercises));
-        }
-
-        static List<Exercise>? _exercises;
-        static List<string>? _targets;
-        static List<string>? _techniques;
-		static List<ExerciseMap>? _techniqueMaps;
-		static List<ExerciseMap>? _targetMaps;
-		
-        public static List<Exercise> Exercises => _exercises ??= ReadJson();
-
-        public static List<string> Targets => _targets ??= GetTargets();
-
-		public static List<ExerciseMap> TechniqueMaps => _techniqueMaps ??= GetTechniqueMaps();
-
-		public static List<ExerciseMap> TargetMaps => _targetMaps ??= GetTargetMaps();
-
-		static List<string> GetTargets()
-        {
-            return Exercises.SelectMany(e => e.Targets, (e, c) => c).OrderBy(c => c).Distinct().ToList();
-        }
-
-        public static List<string> Techniques => _techniques ??= GetTechniques();
-
-		static List<string> GetTechniques()
-        {
-            return Exercises.SelectMany(e => e.Techniques, (e, c) => c).OrderBy(c => c).Distinct().ToList();
-        }
-
-		static List<ExerciseMap> GetTechniqueMaps()
+		static List<T> Load<T>(string file, JsonSerializerOptions? options = null)
 		{
-			var maps = from technique in Techniques
-					select new ExerciseMap(technique, (
-						from exercise in Exercises
-						where exercise.Techniques.Contains(technique)
-						select exercise.Name 
-					).ToList());
+			var thisAssembly = Assembly.GetExecutingAssembly();
 
-			return maps.ToList();
+			using var stream = thisAssembly.GetManifestResourceStream($"WarmupGen.Core.{file}.json") ?? throw new Exception($"Could not find {file}.json");
+			using var reader = new StreamReader(stream);
+
+			var data = reader.ReadToEnd();
+			var targets = JsonSerializer.Deserialize<List<T>>(data, options) ?? throw new Exception("JSON was invalid");
+
+			return targets;
 		}
 
-		static List<ExerciseMap> GetTargetMaps()
+		static List<Target> LoadTargets()
 		{
-			var maps = from target in Targets
-					select new ExerciseMap(target, (
-						from exercise in Exercises
-						where exercise.Targets.Contains(target)
-						select exercise.Name 
-					).ToList());
-
-			return maps.ToList();
+			return Load<Target>("targets");
 		}
 
-        public static Exercise ChooseRandomMatchingExercise(string? technique, string? target, IEnumerable<Exercise>? exclude)
+		static List<Technique> LoadTechniques()
 		{
-			// TODO keep a static empty list arround for this
-			var candidates = Exercises
-				.Except(exclude ?? new List<Exercise>())
-				.Where(e => e.Matches(technique, target))
-				.ToList();
+			return Load<Technique>("techniques");
+		}
 
-			var count = candidates.Count;
-			if (count == 0)
+		public static void WriteJson(ExerciseLibrary lib)
+		{
+			JsonSerializerOptions options = new()
 			{
-				return Exercise.None;
-			}
+				WriteIndented = true
+			};
 
-			var random = new Random(DateTime.Now.Millisecond);
-			var index = random.Next(count - 1);
+			File.WriteAllText("techniques.json", JsonSerializer.Serialize(lib.Techniques, options));
+			File.WriteAllText("targets.json", JsonSerializer.Serialize(lib.Targets, options));
 
-			return candidates[index];
+			JsonSerializerOptions exerciseOptions = new()
+			{
+				WriteIndented = true
+			};
+
+			exerciseOptions.Converters.Add(new TechniqueConverter(lib.Techniques));
+			exerciseOptions.Converters.Add(new TargetConverter(lib.Targets));
+
+			File.WriteAllText("exercises.json", JsonSerializer.Serialize(lib.Exercises, exerciseOptions));
 		}
-    }
-
-	public record ExerciseMap(string Name, List<string> ExerciseNames);
+	}
 }

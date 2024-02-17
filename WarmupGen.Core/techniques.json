@@ -1,0 +1,19 @@
+[
+	{
+		"Id": 1,
+		"Name": "Straight Punches"
+	},
+	{
+		"Id": 2,
+		"Name": "Knee Strikes"
+	},
+	{
+		"Id": 3,
+		"Name": "Low Straight Punch"
+	},
+	{
+		"Id": 4,
+		"Name": "Palm Heel Strikes"
+	}
+
+]

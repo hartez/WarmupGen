@@ -7,12 +7,12 @@
 
 <div class="container">
 
-	@foreach (var technique in Generator.TargetMaps.OrderBy(e => e.Name))
+	@foreach (var mapping in Generator.ExerciseLibrary.TechniqueMaps.OrderBy(m => m.Technique.Name))
 	{
-		<h2>@technique.Name</h2>
+		<h2>@mapping.Technique.Name</h2>
 
 		<ul class="list-unstyled">
-			@foreach (var exercise in technique.ExerciseNames.OrderBy(name => name))
+			@foreach (var exercise in mapping.ExerciseNames.OrderBy(name => name))
 			{
 				<li>@exercise</li>
 			}

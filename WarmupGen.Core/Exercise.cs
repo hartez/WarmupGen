@@ -1,32 +1,34 @@
-﻿namespace WarmupGen.Core
+﻿using System.Text.Json.Serialization;
+
+namespace WarmupGen.Core
 {
-	public record Exercise(string Name, List<string> Techniques, List<string> Targets)
+	public record Exercise(string Name, List<Technique> Techniques, List<Target> Targets)
     {
 		public static Exercise None = new("No Match Found", [], []);
 
         public bool Matches(string? technique, string? target)
         {
-            if (!string.IsNullOrEmpty(technique))
+			// TODO Originally targets/techniques didn't have IDs; this matching would be a bit faster if we used IDs
+		
+			if (!string.IsNullOrEmpty(technique) && !Techniques.Any(t => t.Name == technique))
 			{
-				if (!Techniques.Contains(technique))
-				{
-					return false;
-				}
+				return false;
 			}
 
-			if (!string.IsNullOrEmpty(target))
+			if (!string.IsNullOrEmpty(target) && !Targets.Any(t => t.Name == target))
 			{
-				if (!Targets.Contains(target))
-				{
-					return false;
-				}
+				return false;
 			}
 
 			return true;
         }
 
-		public string TechniquesDisplay => string.Join(", ", Techniques.Order());
+		[JsonIgnore]
+		public string TechniquesDisplay => string.Join(", ", Techniques.Select(t => t.Name).Order());
 
-		public string TargetsDisplay => string.Join(", ", Targets.Order());
+		[JsonIgnore]
+		public string TargetsDisplay => string.Join(", ", Targets.Select(t => t.Name).Order());
     }
+
+	
 }

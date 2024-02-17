@@ -6,12 +6,12 @@ namespace WarmupGen.Tests
 	{
 		public static TheoryData<string?, string?, Exercise, bool> SegmentTestData()
 		{
-			var exerciseWithTarget = new Exercise("test1", new(), new() { "target" });
-			var exerciseWrongTarget = new Exercise("test1", new(), new() { "notTarget" });
-			var exerciseWithTechnique = new Exercise("test2", new() { "technique" }, new());
-			var exerciseWrongTechnique = new Exercise("test2", new() { "notTechnique" }, new());
+			var exerciseWithTarget = new Exercise("test1", [], [new Target(1, "target")]);
+			var exerciseWrongTarget = new Exercise("test1", [], [new Target(2, "notTarget")]);
+			var exerciseWithTechnique = new Exercise("test2", [new Technique(1, "technique")], []);
+			var exerciseWrongTechnique = new Exercise("test2", [new Technique(2, "notTechnique")], []);
 
-			var exerciseWithTargetAndTechnique = new Exercise("test3", new() { "technique" }, new() { "target" });
+			var exerciseWithTargetAndTechnique = new Exercise("test3", [new Technique(3, "technique")], [new Target(3, "target")]);
 
 			return new TheoryData<string?, string?, Exercise, bool>()
 			{

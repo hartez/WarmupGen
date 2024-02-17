@@ -78,8 +78,8 @@ namespace WarmupGen.Tests
 			var segment = new Segment(null, null);
 
 			warmup.Add(segment);
-
-			var expectedExercise = new Exercise("test1", new() { "technique" }, new() { "target" });
+			
+			var expectedExercise = new Exercise("test1", [new(1, "technique")], [new(1, "target")]);
 			segment.Exercise = expectedExercise;
 
 			segment.Target = "target";
@@ -96,7 +96,7 @@ namespace WarmupGen.Tests
 
 			warmup.Add(segment);
 
-			var expectedExercise = new Exercise("test1", new() { "technique" }, new() { "target" });
+			var expectedExercise = new Exercise("test1", [new(1, "technique")], [new(1, "target")]);
 			segment.Exercise = expectedExercise;
 
 			segment.Technique = "technique";
