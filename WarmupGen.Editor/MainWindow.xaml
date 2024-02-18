@@ -10,30 +10,65 @@
 		Title="Exercises"
 		Height="700"
 		Width="1000">
-	<Grid>
+
+	<Window.Resources>
+		<local:IndexBackgroundConverter x:Key="AlternatingBackground"
+										Color="#FFFFFF"
+										AlternateColor="#CCCCCC" />
+	</Window.Resources>
+
+	<Grid Grid.IsSharedSizeScope="True">
 
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="Auto"></RowDefinition>
 		</Grid.RowDefinitions>
 
-		<Button Content="Save" Grid.Row="1" HorizontalAlignment="Right" Margin="10" Name="SaveButton"></Button>
-		
-		<ScrollViewer Margin="10">
+		<Grid Margin="10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="200" />
+				<ColumnDefinition SharedSizeGroup="Targets" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Grid.Column="0"
+					   Text="Exercise"
+					   Style="{StaticResource HeaderTextBlockStyle}"></TextBlock>
+			<TextBlock Style="{StaticResource HeaderTextBlockStyle}"
+					   Text="Targets"
+					   Grid.Column="1"></TextBlock>
+			<TextBlock Style="{StaticResource HeaderTextBlockStyle}"
+					   Text="Techniques"
+					   Grid.Column="2"></TextBlock>
+
+		</Grid>
+
+		<Button Content="Save"
+				Grid.Row="2"
+				HorizontalAlignment="Right"
+				Margin="10"
+				Name="SaveButton"></Button>
+
+		<ScrollViewer Grid.Row="1">
 			<ItemsControl Name="ExerciseList">
+
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Grid Margin="0,0,0,5">
+						<Grid Margin="5"
+							  Background="{Binding Path=Index, Converter={StaticResource AlternatingBackground}}">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="200" />
-								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" SharedSizeGroup="Targets" />
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 
-							<TextBlock Text="{Binding Exercise.Name}" />
+							<TextBlock Text="{Binding Exercise.Name}"
+									   VerticalAlignment="Center" />
 
 							<ItemsControl ItemsSource="{Binding Targets}"
-										  Grid.Column="1">
+										  Grid.Column="1"
+										  VerticalAlignment="Top">
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
 										<UniformGrid Columns="2" />
@@ -49,10 +84,11 @@
 							</ItemsControl>
 
 							<ItemsControl ItemsSource="{Binding Techniques}"
-										  Grid.Column="2">
+										  Grid.Column="2"
+										  VerticalAlignment="Top">
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
-										<UniformGrid Columns="2" />
+										<UniformGrid Columns="4" />
 									</ItemsPanelTemplate>
 								</ItemsControl.ItemsPanel>
 

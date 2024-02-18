@@ -1,23 +1,22 @@
 [
-	{
-		"Id": 1,
-		"Name": "Core"
-	},
-	{
-		"Id": 2,
-		"Name": "Arms"
-	},
-	{
-		"Id": 3,
-		"Name": "Legs"
-	},
-	{
-		"Id": 4,
-		"Name": "Cardio"
-	},
-	{
-		"Id": 5,
-		"Name": "Footwork"
-	}
-
+  {
+    "Id": 1,
+    "Name": "Core"
+  },
+  {
+    "Id": 2,
+    "Name": "Arms"
+  },
+  {
+    "Id": 3,
+    "Name": "Legs"
+  },
+  {
+    "Id": 4,
+    "Name": "Cardio"
+  },
+  {
+    "Id": 5,
+    "Name": "Footwork"
+  }
 ]

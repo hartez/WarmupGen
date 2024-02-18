@@ -1,19 +1,74 @@
 [
-	{
-		"Id": 1,
-		"Name": "Straight Punches"
-	},
-	{
-		"Id": 2,
-		"Name": "Knee Strikes"
-	},
-	{
-		"Id": 3,
-		"Name": "Low Straight Punch"
-	},
-	{
-		"Id": 4,
-		"Name": "Palm Heel Strikes"
-	}
-
+  {
+    "Id": 1,
+    "Name": "Straight Punches"
+  },
+  {
+    "Id": 2,
+    "Name": "Knee Strikes"
+  },
+  {
+    "Id": 3,
+    "Name": "Low Straight Punch"
+  },
+  {
+    "Id": 4,
+    "Name": "Palm Heel Strikes"
+  },
+  {
+    "Id": 5,
+    "Name": "Hook Punch"
+  },
+  {
+    "Id": 6,
+    "Name": "Uppercut Punch"
+  },
+  {
+    "Id": 7,
+    "Name": "Defensive Front Kick"
+  },
+  {
+    "Id": 8,
+    "Name": "Regular Front Kick"
+  },
+  {
+    "Id": 9,
+    "Name": "Side Kick"
+  },
+  {
+    "Id": 10,
+    "Name": "Back Kick"
+  },
+  {
+    "Id": 11,
+    "Name": "Uppercut Back Kick"
+  },
+  {
+    "Id": 12,
+    "Name": "Hammer Fist"
+  },
+  {
+    "Id": 13,
+    "Name": "Buck \u0026 Roll"
+  },
+  {
+    "Id": 14,
+    "Name": "Shrimping"
+  },
+  {
+    "Id": 15,
+    "Name": "Disengage from Mount"
+  },
+  {
+    "Id": 16,
+    "Name": "Elbow 1"
+  },
+  {
+    "Id": 17,
+    "Name": "Adv. Straight Punch"
+  },
+  {
+    "Id": 18,
+    "Name": "Ret. Straight Punch"
+  }
 ]

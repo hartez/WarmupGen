@@ -68,15 +68,19 @@ namespace WarmupGen.Core
 			return Load<Technique>("techniques");
 		}
 
-		public static void WriteJson(ExerciseLibrary lib)
+		public static void WriteJson(ExerciseLibrary lib, string? path = null)
 		{
+			var techniquePath = Path.Join(path, "techniques.json");
+			var targetPath = Path.Join(path, "targets.json");
+			var exercisePath = Path.Join(path, "exercises.json");
+
 			JsonSerializerOptions options = new()
 			{
 				WriteIndented = true
 			};
 
-			File.WriteAllText("techniques.json", JsonSerializer.Serialize(lib.Techniques, options));
-			File.WriteAllText("targets.json", JsonSerializer.Serialize(lib.Targets, options));
+			File.WriteAllText(techniquePath, JsonSerializer.Serialize(lib.Techniques, options));
+			File.WriteAllText(targetPath, JsonSerializer.Serialize(lib.Targets, options));
 
 			JsonSerializerOptions exerciseOptions = new()
 			{
@@ -86,7 +90,7 @@ namespace WarmupGen.Core
 			exerciseOptions.Converters.Add(new TechniqueConverter(lib.Techniques));
 			exerciseOptions.Converters.Add(new TargetConverter(lib.Targets));
 
-			File.WriteAllText("exercises.json", JsonSerializer.Serialize(lib.Exercises, exerciseOptions));
+			File.WriteAllText(exercisePath, JsonSerializer.Serialize(lib.Exercises, exerciseOptions));
 		}
 	}
 }
