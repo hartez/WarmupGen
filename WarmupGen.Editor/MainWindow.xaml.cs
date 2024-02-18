@@ -8,13 +8,27 @@ namespace WarmupGen.Editor
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		readonly List<ExerciseOptionsModel> _options;
+
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			var exerciseOptions = Generator.ExerciseLibrary.Exercises.Select(e => new ExerciseOptionsModel(e)).ToList();
+			_options = Generator.ExerciseLibrary.Exercises.Select(e => new ExerciseOptionsModel(e)).ToList();
 
-			ExerciseList.ItemsSource = exerciseOptions;
+			ExerciseList.ItemsSource = _options;
+
+			SaveButton.Click += SaveButtonClicked;
+		}
+
+		private void SaveButtonClicked(object sender, RoutedEventArgs e)
+		{
+			foreach(var option in _options)
+			{
+				
+			}	
+
+			//Generator.WriteJson(Generator.ExerciseLibrary);
 		}
 	}
 }
