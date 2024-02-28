@@ -29,6 +29,4 @@ namespace WarmupGen.Core
 		[JsonIgnore]
 		public string TargetsDisplay => string.Join(", ", Targets.Select(t => t.Name).Order());
     }
-
-	
 }

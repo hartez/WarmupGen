@@ -243,7 +243,32 @@
   {
     "Name": "Bridges",
     "Techniques": [
-      13
+      13,
+      19
+    ],
+    "Targets": [
+      1
+    ]
+  },
+  {
+    "Name": "Bicycles",
+    "Techniques": [],
+    "Targets": [
+      1
+    ]
+  },
+  {
+    "Name": "Bird Dogs",
+    "Techniques": [],
+    "Targets": [
+      1
+    ]
+  },
+  {
+    "Name": "Crunches",
+    "Techniques": [
+      2,
+      6
     ],
     "Targets": [
       1

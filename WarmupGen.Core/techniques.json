@@ -70,5 +70,9 @@
   {
     "Id": 18,
     "Name": "Ret. Straight Punch"
+  },
+  {
+    "Id": 19,
+    "Name": "Front Kick From Ground"
   }
 ]
