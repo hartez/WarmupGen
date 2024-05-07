@@ -74,5 +74,9 @@
   {
     "Id": 19,
     "Name": "Front Kick From Ground"
+  },
+  {
+    "Id": 20,
+    "Name": "Takedowns"
   }
 ]
