@@ -197,7 +197,12 @@
   {
     "Name": "High Knees",
     "Techniques": [
-      2
+      10,
+      7,
+      19,
+      2,
+      8,
+      9
     ],
     "Targets": [
       4
@@ -347,6 +352,15 @@
     "Techniques": [],
     "Targets": [
       3
+    ]
+  },
+  {
+    "Name": "Sit-through",
+    "Techniques": [
+      21
+    ],
+    "Targets": [
+      1
     ]
   }
 ]

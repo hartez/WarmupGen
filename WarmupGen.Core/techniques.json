@@ -78,5 +78,9 @@
   {
     "Id": 20,
     "Name": "Takedowns"
+  },
+  {
+    "Id": 21,
+    "Name": "Getting Up"
   }
 ]

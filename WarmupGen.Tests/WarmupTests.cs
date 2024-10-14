@@ -78,7 +78,7 @@ namespace WarmupGen.Tests
 			var segment = new Segment(null, null);
 
 			warmup.Add(segment);
-			
+
 			var expectedExercise = new Exercise("test1", [new(1, "technique")], [new(1, "target")]);
 			segment.Exercise = expectedExercise;
 
@@ -103,6 +103,36 @@ namespace WarmupGen.Tests
 
 			// The updated technique matches the current exercise, so no need to change it
 			Assert.Equal(expectedExercise, segment.Exercise);
+		}
+	}
+
+	public class ExtensionTests
+	{
+		[Fact]
+		public void SingleItemListRenders()
+		{
+			var expected = "thing";
+			var list = new List<string>() { "thing" };
+
+			Assert.Equal(expected, list.ToCommaSeparatedList());
+		}
+
+		[Fact]
+		public void EmptyListRenders()
+		{
+			var expected = "";
+			var list = new List<string>() { };
+
+			Assert.Equal(expected, list.ToCommaSeparatedList());
+		}
+
+		[Fact]
+		public void MultiItemListRenders()
+		{
+			var expected = "thing1, thing2, thing3";
+			var list = new List<string>() { "thing1", "thing2", "thing3" };
+
+			Assert.Equal(expected, list.ToCommaSeparatedList());
 		}
 	}
 }

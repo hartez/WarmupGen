@@ -3,23 +3,27 @@
 
 <PageTitle>Techniques</PageTitle>
 
-<h1>Techniques</h1>
-
 <div class="container">
 
-	@foreach (var mapping in Generator.ExerciseLibrary.TechniqueMaps.OrderBy(m => m.Technique.Name))
-	{
-		<h2>@mapping.Technique.Name</h2>
-
-		<ul class="list-unstyled">
-			@foreach (var exercise in mapping.ExerciseNames.OrderBy(name => name))
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Technique</th>
+				<th scope="col">Exercises</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var mapping in Generator.ExerciseLibrary.TechniqueMaps.OrderBy(m => m.Technique.Name))
 			{
-				<li>@exercise</li>
+				<tr>
+					<td>@mapping.Technique.Name</td>
+					<td>
+						@mapping.ExerciseNames.OrderBy(name => name).ToList().ToCommaSeparatedList()
+					</td>
+				</tr>
 			}
-		</ul>
-	}
+		</tbody>
+	</table>
 
 </div>
-
-
 
