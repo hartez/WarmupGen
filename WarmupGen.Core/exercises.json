@@ -362,5 +362,13 @@
     "Targets": [
       1
     ]
+  },
+  {
+    "Name": "Bear Plank",
+    "Techniques": [],
+    "Targets": [
+      1,
+      3
+    ]
   }
 ]
